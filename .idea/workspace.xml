@@ -1,0 +1,1068 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="fb124cda-5cf5-4cc7-808e-ab8b7b4d6029" name="Default Changelist" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="detectron2-master" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/projects/AMA/densepose/densepose_head.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="130">
+              <caret line="1357" column="38" lean-forward="true" selection-start-line="1357" selection-start-column="38" selection-end-line="1357" selection-end-column="38" />
+              <folding>
+                <element signature="e#669#1674#0" />
+                <element signature="e#1727#2312#0" />
+                <element signature="e#2397#3577#0" />
+                <element signature="e#3614#3949#0" />
+                <element signature="e#3990#4442#0" />
+                <element signature="e#4471#5560#0" />
+                <element signature="e#68082#70167#0" />
+                <element signature="e#95060#96407#0" />
+                <element signature="e#96437#96768#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/projects/DensePose/configs/densepose_R_50_FPN_s1x.yaml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="253">
+              <caret line="11" column="23" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/projects/AMA/densepose/roi_head.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="120" column="48" selection-start-line="120" selection-start-column="48" selection-end-line="120" selection-end-column="48" />
+              <folding>
+                <element signature="e#104#116#0" expanded="true" />
+                <element signature="e#18628#20800#0" />
+                <element signature="e#22856#28819#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/projects/AMA/configs/AMA/densepose_AMA_task_transformer_box_part_kpt_R_50_FPN_s1x.yaml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="506">
+              <caret line="22" column="20" lean-forward="true" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/projects/DensePose/densepose/structures.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="7107">
+              <caret line="427" column="63" selection-start-line="427" selection-start-column="63" selection-end-line="427" selection-end-column="63" />
+              <folding>
+                <element signature="e#71#84#0" expanded="true" />
+                <element signature="e#8247#10042#0" />
+                <element signature="e#10089#10148#0" />
+                <element signature="e#10221#12352#0" />
+                <element signature="e#12423#12807#0" />
+                <element signature="e#19401#22134#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/projects/DensePose/train_net.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="172">
+              <caret line="61" column="40" selection-start-line="61" selection-start-column="40" selection-end-line="61" selection-end-column="40" />
+              <folding>
+                <element signature="e#247#256#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>aug</find>
+      <find>DensePoseResultsMplContourVisualizer</find>
+      <find>ROI_MASK_HEAD</find>
+      <find>_evaluate_predictions_on_coco</find>
+      <find>InferenceAction</find>
+      <find>create_extractor</find>
+      <find>DensePoseResultsVisualizer</find>
+      <find>ScoreThresholdedExtractor</find>
+      <find>DensePoseAMAHead</find>
+      <find>ROI_BOX_HEAD</find>
+      <find>AMA</find>
+      <find>t</find>
+      <find>95</find>
+      <find>0.95</find>
+      <find>0.255</find>
+      <find>size_divisibility</find>
+      <find>_forward_ktn_densepose</find>
+      <find>DensePoseKptRelationPredictorV1</find>
+      <find>DensePosePredictor</find>
+      <find>DensePoseKTNPredictorV3</find>
+      <find>FG_IOU_THRESHOLD</find>
+      <find>DensePoseRCNNStarPredictor</find>
+      <find>DensePoseResultsContourVisualizer</find>
+      <find>densepose_inference</find>
+      <find>train</find>
+      <find>CHECKPOINT_PERIOD</find>
+      <find>5000</find>
+      <find>DensePoseKptRelationPredictor</find>
+      <find>get_norm</find>
+      <find>ModuleList</find>
+    </findStrings>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/projects/DensePose/configs/densepose_kpt_R_50_FPN_s1x.yaml" />
+        <option value="$PROJECT_DIR$/projects/DensePose/configs/densepose_SemSegAMA_IA_3xDeConv_kpt_R_50_FPN_s3x.yaml" />
+        <option value="$PROJECT_DIR$/projects/KTN/densepose/structures.py" />
+        <option value="$PROJECT_DIR$/projects/KTN/densepose/config.py" />
+        <option value="$PROJECT_DIR$/projects/KTN/densepose/roi_head.py" />
+        <option value="$PROJECT_DIR$/projects/KTN/configs/densepose_R_50_FPN_MID_Kpt_Weight_Transfer_net_s1x.yaml" />
+        <option value="$PROJECT_DIR$/detectron2/data/datasets/builtin.py" />
+        <option value="$PROJECT_DIR$/configs/COCO-Keypoints/hie_rcnn_X_101_32x8d_FPN_3x.yaml" />
+        <option value="$PROJECT_DIR$/projects/DensePose/densepose/config.py" />
+        <option value="$PROJECT_DIR$/projects/DensePose/configs/KTN/densepose_R_50_FPN_MID_3_dilation_semseg_net_s1x.yaml" />
+        <option value="$PROJECT_DIR$/projects/DensePose/densepose/semantic_mask_head.py" />
+        <option value="$PROJECT_DIR$/projects/DensePose/configs/KTN/densepose_R_50_FPN_semseg_net_s1x.yaml" />
+        <option value="$PROJECT_DIR$/detectron2/evaluation/evaluator.py" />
+        <option value="$PROJECT_DIR$/projects/DensePose/densepose/vis/densepose.py" />
+        <option value="$PROJECT_DIR$/projects/DensePose/configs/densepose_R_50_FPN_MID_Kpt_Weight_Transfer_net_s1x.yaml" />
+        <option value="$PROJECT_DIR$/projects/KTN/densepose/densepose_head.py" />
+        <option value="$PROJECT_DIR$/projects/DensePose/configs/KTN/densepose_R_50_FPN_MID_2_scales_net_s1x.yaml" />
+        <option value="$PROJECT_DIR$/detectron2/engine/defaults.py" />
+        <option value="$PROJECT_DIR$/projects/DensePose/densepose_demo/UVTextureConverter/UVConverter.py" />
+        <option value="$PROJECT_DIR$/projects/DensePose/densepose_demo/create_uv_texture_from_image.py" />
+        <option value="$PROJECT_DIR$/projects/DensePose/configs/AMA.py" />
+        <option value="$PROJECT_DIR$/projects/DensePose/configs/densepose_SemSegAMA_IA_3xDeConv_bbox_distill_R_50_FPN_s1x.yaml" />
+        <option value="$PROJECT_DIR$/projects/DensePose/configs/AMA/densepose_AMA_IA_3xDeConv_bbox_distill_R_50_FPN_s1x.yaml" />
+        <option value="$PROJECT_DIR$/projects/DensePose/configs/KTN/densepose_R_50_FPN_MID_1_scales_net_s1x.yaml" />
+        <option value="$PROJECT_DIR$/projects/DensePose/configs/KTN/densepose_R_50_FPN_MID_3_dilation_net_s1x.yaml" />
+        <option value="$PROJECT_DIR$/detectron2/modeling/backbone/resnet.py" />
+        <option value="$PROJECT_DIR$/detectron2/modeling/meta_arch/rcnn.py" />
+        <option value="$PROJECT_DIR$/projects/DensePose/densepose/transformer_helper.py" />
+        <option value="$PROJECT_DIR$/projects/DensePose/configs/AMA/densepose_AMA_IA_3xDeConv_task_transformer_R_50_FPN_s1x.yaml" />
+        <option value="$PROJECT_DIR$/projects/DensePose/configs/AMA/densepose_AMA_task_transformer_box_part_kpt_R_50_FPN_s1x.yaml" />
+        <option value="$PROJECT_DIR$/projects/DensePose/generate_analysis_results.py" />
+        <option value="$PROJECT_DIR$/projects/DensePose/configs/KTN/densepose_R_50_FPN_KTNv2_net_s1x.yaml" />
+        <option value="$PROJECT_DIR$/projects/DensePose/configs/KTN/densepose_R_50_FPN_KTNv2_all2D_net_s1x.yaml" />
+        <option value="$PROJECT_DIR$/projects/reload_torch_model.py" />
+        <option value="$PROJECT_DIR$/projects/DensePose/configs/KTN/densepose_R_50_FPN_KTMv2_all2D_net_s1x.yaml" />
+        <option value="$PROJECT_DIR$/projects/DensePose/configs/KTN/densepose_R_50_FPN_KTMv2_kpt_box_net_s1x.yaml" />
+        <option value="$PROJECT_DIR$/projects/DensePose/configs/KTN/densepose_R_50_FPN_MIDv2_net_s1x.yaml" />
+        <option value="$PROJECT_DIR$/projects/DensePose/apply_net.py" />
+        <option value="$PROJECT_DIR$/projects/DensePose/infer_dp_from_image.py" />
+        <option value="$PROJECT_DIR$/projects/DensePose/densepose/structures.py" />
+        <option value="$PROJECT_DIR$/projects/DensePose/densepose/densepose_head.py" />
+        <option value="$PROJECT_DIR$/projects/DensePose/densepose/roi_head.py" />
+        <option value="$PROJECT_DIR$/projects/DensePose/configs/KTN/densepose_R_50_FPN_KTNv2_2d_kpt_net_s1x.yaml" />
+        <option value="$PROJECT_DIR$/projects/DensePose/densepose/hrnet.py" />
+        <option value="$PROJECT_DIR$/projects/DensePose/densepose/hrfpn.py" />
+        <option value="$PROJECT_DIR$/projects/DensePose/densepose/__init__.py" />
+        <option value="$PROJECT_DIR$/projects/DensePose/configs/densepose_HRNet_32_FPN_s1x.yaml" />
+        <option value="$PROJECT_DIR$/projects/DensePose/configs/densepose_R_50_FPN_s1x.yaml" />
+        <option value="$PROJECT_DIR$/projects/AMA/densepose/densepose_head.py" />
+        <option value="$PROJECT_DIR$/projects/AMA/densepose/roi_head.py" />
+        <option value="$PROJECT_DIR$/projects/AMA/configs/AMA/densepose_AMA_task_transformer_box_part_kpt_R_50_FPN_s1x.yaml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="1912" />
+    <option name="y" value="-3" />
+    <option name="width" value="1936" />
+    <option name="height" value="1096" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="detectron2-master" type="b2602c69:ProjectViewProjectNode" />
+              <item name="detectron2-master" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="detectron2-master" type="b2602c69:ProjectViewProjectNode" />
+              <item name="detectron2-master" type="462c0819:PsiDirectoryNode" />
+              <item name="projects" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="detectron2-master" type="b2602c69:ProjectViewProjectNode" />
+              <item name="detectron2-master" type="462c0819:PsiDirectoryNode" />
+              <item name="projects" type="462c0819:PsiDirectoryNode" />
+              <item name="AMA" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="detectron2-master" type="b2602c69:ProjectViewProjectNode" />
+              <item name="detectron2-master" type="462c0819:PsiDirectoryNode" />
+              <item name="projects" type="462c0819:PsiDirectoryNode" />
+              <item name="AMA" type="462c0819:PsiDirectoryNode" />
+              <item name="configs" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="detectron2-master" type="b2602c69:ProjectViewProjectNode" />
+              <item name="detectron2-master" type="462c0819:PsiDirectoryNode" />
+              <item name="projects" type="462c0819:PsiDirectoryNode" />
+              <item name="AMA" type="462c0819:PsiDirectoryNode" />
+              <item name="densepose" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="detectron2-master" type="b2602c69:ProjectViewProjectNode" />
+              <item name="detectron2-master" type="462c0819:PsiDirectoryNode" />
+              <item name="projects" type="462c0819:PsiDirectoryNode" />
+              <item name="DensePose" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="detectron2-master" type="b2602c69:ProjectViewProjectNode" />
+              <item name="detectron2-master" type="462c0819:PsiDirectoryNode" />
+              <item name="projects" type="462c0819:PsiDirectoryNode" />
+              <item name="DensePose" type="462c0819:PsiDirectoryNode" />
+              <item name="densepose" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/projects/DensePose/configs" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\Research\Project\human_analysis\detectron2-master\projects\DensePose\configs" />
+      <recent name="F:\Research\Project\human_analysis\detectron2-master\projects\DensePose\configs\KTN" />
+      <recent name="F:\Research\Project\human_analysis\detectron2-master\projects\DensePose\configs\AMA" />
+      <recent name="F:\Research\Project\human_analysis\detectron2-master\projects\DensePose" />
+      <recent name="F:\Research\Project\human_analysis\detectron2-master\projects\KTN" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Python.infer_dp_from_image">
+    <configuration name="apply_net" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="detectron2-master" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/projects/DensePose" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/projects/DensePose/apply_net.py" />
+      <option name="PARAMETERS" value="show" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="create_uv_texture_from_image" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="detectron2-master" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/projects/DensePose/densepose_demo" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/projects/DensePose/densepose_demo/create_uv_texture_from_image.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="generate_analysis_results" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="detectron2-master" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/projects/DensePose" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/projects/DensePose/generate_analysis_results.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="infer_dp_from_image" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="detectron2-master" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/projects/DensePose" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/projects/DensePose/infer_dp_from_image.py" />
+      <option name="PARAMETERS" value="infer" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="reload_torch_model" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="detectron2-master" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/projects" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/projects/reload_torch_model.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.apply_net" />
+      <item itemvalue="Python.generate_analysis_results" />
+      <item itemvalue="Python.create_uv_texture_from_image" />
+      <item itemvalue="Python.infer_dp_from_image" />
+      <item itemvalue="Python.reload_torch_model" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.infer_dp_from_image" />
+        <item itemvalue="Python.apply_net" />
+        <item itemvalue="Python.reload_torch_model" />
+        <item itemvalue="Python.generate_analysis_results" />
+        <item itemvalue="Python.create_uv_texture_from_image" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fb124cda-5cf5-4cc7-808e-ab8b7b4d6029" name="Default Changelist" comment="" />
+      <created>1570935014046</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1570935014046</updated>
+      <workItem from="1570935019420" duration="33168000" />
+      <workItem from="1571400824590" duration="179449000" />
+      <workItem from="1575249217103" duration="53185000" />
+      <workItem from="1576046528843" duration="43000" />
+      <workItem from="1576046572808" duration="71000" />
+      <workItem from="1576046776380" duration="124023000" />
+      <workItem from="1578102232236" duration="79946000" />
+      <workItem from="1592267348423" duration="8411000" />
+      <workItem from="1592310697075" duration="595000" />
+      <workItem from="1592472664945" duration="8014000" />
+      <workItem from="1592813164072" duration="10334000" />
+      <workItem from="1594949945828" duration="1196000" />
+      <workItem from="1595227501838" duration="597000" />
+      <workItem from="1595493994828" duration="1015000" />
+      <workItem from="1595850758843" duration="2137000" />
+      <workItem from="1597662121334" duration="3001000" />
+      <workItem from="1597991238512" duration="736000" />
+      <workItem from="1598949204185" duration="9477000" />
+      <workItem from="1601090495029" duration="617000" />
+      <workItem from="1604113171589" duration="2791000" />
+      <workItem from="1605687963440" duration="1657000" />
+      <workItem from="1606287249166" duration="20000" />
+      <workItem from="1606735501987" duration="22904000" />
+      <workItem from="1607305431138" duration="2004000" />
+      <workItem from="1607392055107" duration="4749000" />
+      <workItem from="1607409147666" duration="53609000" />
+      <workItem from="1608088297090" duration="21695000" />
+      <workItem from="1608204164696" duration="15591000" />
+      <workItem from="1608274744425" duration="54359000" />
+      <workItem from="1608532063516" duration="24624000" />
+      <workItem from="1608861798393" duration="597000" />
+      <workItem from="1609032163556" duration="36887000" />
+      <workItem from="1609466928199" duration="80834000" />
+      <workItem from="1610951949288" duration="9036000" />
+      <workItem from="1611730936025" duration="6508000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="853880000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="1912" y="-3" width="1936" height="1096" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.29904053" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" weight="0.32995737" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32968238" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.28806135" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39978093" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3298969" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="File Transfer" order="9" visible="true" weight="0.20920044" />
+      <window_info anchor="bottom" id="Database Changes" order="10" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.3298969" />
+      <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
+      <window_info anchor="bottom" id="Python Console" order="13" weight="0.3298969" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Remote Host" order="3" />
+      <window_info anchor="right" id="SciView" order="4" />
+      <window_info anchor="right" id="Database" order="5" />
+    </layout>
+    <layout-to-restore>
+      <window_info id="Favorites" order="0" side_tool="true" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.25" />
+      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="1" />
+      <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Database Changes" order="3" />
+      <window_info anchor="bottom" id="Version Control" order="4" />
+      <window_info anchor="bottom" id="Python Console" order="5" />
+      <window_info anchor="bottom" id="Message" order="6" />
+      <window_info anchor="bottom" id="Find" order="7" />
+      <window_info anchor="bottom" id="Run" order="8" />
+      <window_info anchor="bottom" id="Debug" order="9" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="12" />
+      <window_info anchor="right" id="Remote Host" order="0" />
+      <window_info anchor="right" id="SciView" order="1" />
+      <window_info anchor="right" id="Database" order="2" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="3" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="4" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="5" weight="0.25" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/generate_dp_seg_images.py</url>
+          <line>68</line>
+          <option name="timeStamp" value="156" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/projects/DensePose/densepose/densepose_head.py</url>
+          <line>3142</line>
+          <option name="timeStamp" value="264" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/projects/DensePose/densepose_demo/create_uv_texture_from_image.py</url>
+          <line>32</line>
+          <option name="timeStamp" value="334" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/projects/reload_torch_model.py</url>
+          <line>7</line>
+          <option name="timeStamp" value="356" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="proposals_dp[0]" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/detectron2_master$train_net.coverage" NAME="train_net Coverage Results" MODIFIED="1578741620752" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/projects/DensePose" />
+    <SUITE FILE_PATH="coverage/detectron2_master$create_uv_texture_from_image.coverage" NAME="create_uv_texture_from_image Coverage Results" MODIFIED="1608211075531" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/projects/DensePose/densepose_demo" />
+    <SUITE FILE_PATH="coverage/detectron2_master$reload_torch_model.coverage" NAME="reload_torch_model Coverage Results" MODIFIED="1609931166981" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/projects" />
+    <SUITE FILE_PATH="coverage/detectron2_master$generate_dp_seg_images.coverage" NAME="generate_dp_seg_images Coverage Results" MODIFIED="1576032203854" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/detectron2_master$infer_dp_from_image.coverage" NAME="infer_dp_from_image Coverage Results" MODIFIED="1610696919135" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/projects/DensePose" />
+    <SUITE FILE_PATH="coverage/detectron2_master$generate_analysis_results.coverage" NAME="generate_analysis_results Coverage Results" MODIFIED="1609226908683" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/projects/DensePose" />
+    <SUITE FILE_PATH="coverage/detectron2_master$dataset_mapper.coverage" NAME="dataset_mapper Coverage Results" MODIFIED="1576035710648" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/projects/DensePose/densepose" />
+    <SUITE FILE_PATH="coverage/detectron2_master$apply_net.coverage" NAME="apply_net Coverage Results" MODIFIED="1610693116136" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/projects/DensePose" />
+    <SUITE FILE_PATH="coverage/detectron2_master$generate_visual_images.coverage" NAME="generate_visual_images Coverage Results" MODIFIED="1578912477559" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>idx</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>v</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>idx[::-1]</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>select_scores.sort()</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>scores</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>scores.sort()</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>len(densepose_result.results)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>scores[select_local]</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>len(scores)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/detectron2/structures/image_list.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1150">
+          <caret line="53" column="29" selection-start-line="53" selection-start-column="12" selection-end-line="53" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detectron2/modeling/backbone/fpn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2116">
+          <caret line="101" column="35" lean-forward="true" selection-start-line="101" selection-start-column="35" selection-end-line="101" selection-end-column="35" />
+          <folding>
+            <element signature="e#71#82#0" expanded="true" />
+            <element signature="e#7245#7557#0" />
+            <element signature="e#7596#8169#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detectron2/modeling/backbone/resnet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="690">
+          <caret line="327" column="8" selection-start-line="327" selection-start-column="8" selection-end-line="327" selection-end-column="8" />
+          <folding>
+            <element signature="e#617#1190#0" />
+            <element signature="e#1237#4528#0" />
+            <element signature="e#4581#7896#0" />
+            <element signature="e#7968#8626#0" />
+            <element signature="e#8661#9597#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/configs/AMA/densepose_AMA_IA_3xDeConv_bbox_distill_R_50_FPN_s1x.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="9" column="20" lean-forward="true" selection-start-line="9" selection-start-column="20" selection-end-line="9" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/configs/AMA/densepose_AMA_task_transformer_box_part_kpt_R_50_FPN_s1x.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="10" column="15" lean-forward="true" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/generate_analysis_results.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="27" column="123" selection-start-line="27" selection-start-column="123" selection-end-line="27" selection-end-column="123" />
+          <folding>
+            <element signature="e#24#61#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/densepose/transformer_helper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1495">
+          <caret line="68" column="13" selection-start-line="68" selection-start-column="8" selection-end-line="68" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2019.1/system/remote_sources/-319168202/186539817/torch/serialization.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="418" selection-start-line="418" selection-end-line="418" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/reload_torch_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/configs/densepose_R_50_FPN_Kpt_Weight_Transfer_CRKG_s1x.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="460">
+          <caret line="20" column="47" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/configs/AMA/densepose_AMA_IA_3xDeConv_task_transformer_R_50_FPN_s1x.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-248">
+          <caret line="14" column="22" lean-forward="true" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detectron2/modeling/roi_heads/roi_heads.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1100">
+          <caret line="537" column="8" selection-start-line="537" selection-start-column="8" selection-end-line="537" selection-end-column="8" />
+          <folding>
+            <element signature="e#24972#25968#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/densepose/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="33" column="45" selection-start-line="33" selection-start-column="32" selection-end-line="33" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/configs/KTN/densepose_R_50_FPN_KTMv2_kpt_box_net_s1x.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="213">
+          <caret line="11" column="21" lean-forward="true" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/configs/KTN/densepose_R_50_FPN_KTNv2_net_s1x.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="15" column="20" lean-forward="true" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/configs/KTN/densepose_R_50_FPN_MID_3_dilation_semseg_net_s1x.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="17" column="4" lean-forward="true" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/configs/KTN/densepose_R_50_FPN_MID_2_scales_net_s1x.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="12" column="22" lean-forward="true" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/densepose/evaluator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="176" column="25" lean-forward="true" selection-start-line="176" selection-start-column="25" selection-end-line="176" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/configs/densepose_R_50_FPN_Parsing_rcnn_Kpt_Weight_Transfer_net_s1x.yaml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/configs/densepose_R_50_FPN_MID_Kpt_Weight_Transfer_net_s1x.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="19" column="45" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../AMA-net/AMA-net/notebooks/DensePose-RCNN-Visualize-Results.ipynb">
+      <provider selected="true" editor-type-id="jupyter-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/configs/KTN/densepose_R_50_FPN_MIDv2_net_s1x.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="541">
+          <caret line="30" column="28" lean-forward="true" selection-start-line="30" selection-start-column="28" selection-end-line="30" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/configs/Base-DensePose-RCNN.yaml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/apply_net.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-850">
+          <caret line="181" column="55" selection-start-line="181" selection-start-column="22" selection-end-line="181" selection-end-column="55" />
+          <folding>
+            <element signature="e#71#86#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detectron2/checkpoint/detection_checkpoint.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detectron2/engine/train_loop.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="395">
+          <caret line="56" column="8" selection-start-line="56" selection-start-column="8" selection-end-line="56" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detectron2/engine/launch.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1368" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detectron2/engine/hooks.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-763">
+          <caret line="166" column="6" selection-start-line="166" selection-start-column="6" selection-end-line="166" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detectron2/engine/defaults.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="292" column="33" lean-forward="true" selection-start-line="292" selection-start-column="33" selection-end-line="292" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detectron2/config/defaults.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="506" column="34" lean-forward="true" selection-start-line="506" selection-start-column="34" selection-end-line="506" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detectron2/layers/wrappers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
+          <folding>
+            <element signature="e#1003#3016#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/densepose/vis/densepose.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1771">
+          <caret line="77" column="83" lean-forward="true" selection-start-line="77" selection-start-column="8" selection-end-line="77" selection-end-column="83" />
+          <folding>
+            <element signature="e#71#85#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/densepose/vis/extractor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1909">
+          <caret line="89" column="39" selection-start-line="89" selection-start-column="29" selection-end-line="89" selection-end-column="39" />
+          <folding>
+            <element signature="e#71#85#0" expanded="true" />
+            <element signature="e#746#1008#0" />
+            <element signature="e#3264#3667#0" />
+            <element signature="e#3706#4053#0" />
+            <element signature="e#4096#5023#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detectron2/data/datasets/builtin_meta.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="9" column="58" selection-start-line="9" selection-start-column="58" selection-end-line="9" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/densepose/vis/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="186" column="34" lean-forward="true" selection-start-line="186" selection-start-column="34" selection-end-line="186" selection-end-column="34" />
+          <folding>
+            <element signature="e#71#85#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/configs/KTN/densepose_R_50_FPN_KTNv2_2d_kpt_net_s1x.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="620">
+          <caret line="31" column="20" selection-start-line="31" selection-start-column="20" selection-end-line="31" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/configs/KTN/densepose_R_50_FPN_KTMv2_all2D_net_s1x.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="69">
+          <caret line="9" column="16" lean-forward="true" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/configs/KTN/densepose_R_50_FPN_KTNv2_all2D_net_s1x.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="398">
+          <caret line="18" column="22" lean-forward="true" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/densepose/structures.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7107">
+          <caret line="427" column="63" selection-start-line="427" selection-start-column="63" selection-end-line="427" selection-end-column="63" />
+          <folding>
+            <element signature="e#71#84#0" expanded="true" />
+            <element signature="e#8247#10042#0" />
+            <element signature="e#10089#10148#0" />
+            <element signature="e#10221#12352#0" />
+            <element signature="e#12423#12807#0" />
+            <element signature="e#19401#22134#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/infer_dp_from_image.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2760">
+          <caret line="141" column="23" selection-start-line="141" selection-start-column="23" selection-end-line="141" selection-end-column="23" />
+          <folding>
+            <element signature="e#71#86#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/densepose/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+          <folding>
+            <element signature="e#71#117#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/train_net.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="172">
+          <caret line="61" column="40" selection-start-line="61" selection-start-column="40" selection-end-line="61" selection-end-column="40" />
+          <folding>
+            <element signature="e#247#256#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/configs/densepose_HRNet_32_FPN_s1x.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="30" selection-start-line="4" selection-start-column="30" selection-end-line="4" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/densepose/hrfpn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="222">
+          <caret line="39" column="41" selection-start-line="39" selection-start-column="41" selection-end-line="39" selection-end-column="41" />
+          <folding>
+            <element signature="e#1122#1134#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/configs/densepose_R_50_FPN_s1x.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="11" column="23" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/densepose/roi_head.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="28" column="4" lean-forward="true" selection-start-line="28" selection-start-column="4" selection-end-line="29" selection-end-column="32" />
+          <folding>
+            <element signature="e#1393#2280#0" />
+            <element signature="e#2334#5430#0" />
+            <element signature="e#5481#9905#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/densepose/hrnet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="6" column="31" selection-start-line="6" selection-start-column="31" selection-end-line="6" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/DensePose/densepose/densepose_head.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="2411" selection-start-line="2411" selection-end-line="2457" selection-end-column="16" />
+          <folding>
+            <element signature="e#71#83#0" expanded="true" />
+            <element signature="e#12325#15354#0" />
+            <element signature="e#15435#20743#0" />
+            <element signature="e#20828#31263#0" />
+            <element signature="e#35168#39573#0" />
+            <element signature="e#39670#43496#0" />
+            <element signature="e#43593#47795#0" />
+            <element signature="e#47892#52166#0" />
+            <element signature="e#52261#57749#0" />
+            <element signature="e#105952#114699#0" />
+            <element signature="e#114794#122450#0" />
+            <element signature="e#122504#124589#0" />
+            <element signature="e#152172#153519#0" />
+            <element signature="e#153549#153880#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/AMA/densepose/densepose_head.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="1357" column="38" lean-forward="true" selection-start-line="1357" selection-start-column="38" selection-end-line="1357" selection-end-column="38" />
+          <folding>
+            <element signature="e#669#1674#0" />
+            <element signature="e#1727#2312#0" />
+            <element signature="e#2397#3577#0" />
+            <element signature="e#3614#3949#0" />
+            <element signature="e#3990#4442#0" />
+            <element signature="e#4471#5560#0" />
+            <element signature="e#68082#70167#0" />
+            <element signature="e#95060#96407#0" />
+            <element signature="e#96437#96768#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/AMA/densepose/roi_head.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="120" column="48" selection-start-line="120" selection-start-column="48" selection-end-line="120" selection-end-column="48" />
+          <folding>
+            <element signature="e#104#116#0" expanded="true" />
+            <element signature="e#18628#20800#0" />
+            <element signature="e#22856#28819#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/AMA/configs/AMA/densepose_AMA_task_transformer_box_part_kpt_R_50_FPN_s1x.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="506">
+          <caret line="22" column="20" lean-forward="true" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

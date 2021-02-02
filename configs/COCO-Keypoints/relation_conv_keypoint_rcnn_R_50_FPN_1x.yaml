@@ -1,0 +1,23 @@
+_BASE_: "Base-Keypoint-RCNN-FPN.yaml"
+MODEL:
+  WEIGHTS: "detectron2://ImageNetPretrained/MSRA/R-50.pkl"
+  RESNETS:
+    DEPTH: 50
+#  RPN:
+#    PRE_NMS_TOPK_TRAIN: 1500  # Per FPN level
+#    PRE_NMS_TOPK_TEST: 1000  # Per FPN level
+#    POST_NMS_TOPK_TRAIN: 1000
+#    POST_NMS_TOPK_TEST: 1000
+#  ROI_HEADS:
+#      BATCH_SIZE_PER_IMAGE: 384
+  ROI_KEYPOINT_HEAD:
+    RELATION_ON: False
+    RELATION_DIM: 768
+    CONV_HEAD_DIM: 512
+    NAME: "KRCNNPoseRelationConveHead"
+    RELATION_DIR: "/home/wangxuanhan/research/project/visual_genome_python_driver/kpt_common_relationships.pkl"
+SOLVER:
+  IMS_PER_BATCH: 8
+  BASE_LR: 0.01
+  STEPS: (120000, 160000)
+  MAX_ITER: 180000

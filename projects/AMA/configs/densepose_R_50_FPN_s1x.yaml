@@ -1,0 +1,27 @@
+_BASE_: "Base-DensePose-RCNN.yaml"
+INPUT:
+  MIN_SIZE_TRAIN: (640, 672, 704, 736, 768, 800)
+MODEL:
+  WEIGHTS: "catalog://ImageNetPretrained/MSRA/R-50"
+  KEYPOINT_ON: False
+  DENSEPOSE_ON: True
+  ROI_DENSEPOSE_HEAD:
+    CONV_HEAD_DIM: 512
+    KPT_ON: False
+  ROI_KEYPOINT_HEAD:
+    RCNN_HEAD_ON: False
+#  WEIGHTS: "/home/wangxuanhan/research/project/detectron2-master/coco_exps/DensePose_Res50_baseline/model_final.pth"
+#  ROI_HEADS:
+#    SCORE_THRESH_TEST: 0.1
+#TEST:
+#  DETECTIONS_PER_IMAGE: 20
+SOLVER:
+  MAX_ITER: 180000
+  STEPS: (120000, 160000)
+  BASE_LR: 0.002
+  IMS_PER_BATCH: 12
+  WARMUP_FACTOR: 0.1
+#DATASETS:
+#  TRAIN: ("keypoints_coco_2014_train","keypoints_coco_2014_valminusminival")
+#  TEST: ("keypoints_coco_2014_minival",)
+

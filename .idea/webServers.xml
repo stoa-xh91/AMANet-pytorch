@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="8a7db19d-0fb5-404b-93d1-9b3ed4abac14" name="12580_detectron2" url="http://121.48.165.6">
+        <fileTransfer host="121.48.165.6" port="12580" rootFolder="/home/wangxuanhan" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="12580" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
