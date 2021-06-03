@@ -1,4 +1,4 @@
-# KTN: Knowledge Transfer Network for Multi-person Densepose Estimation
+# AMAN: Adaptive Multi-Path Aggregation for Learning Human 2D-3D Correspondences
 
 # Introduction
 This is the implementation of AMANet: Adaptive Multi-Path Aggregation for Learning Human 2D-3D Correspondences
