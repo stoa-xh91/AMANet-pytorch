@@ -42,6 +42,27 @@ Make sure to put the files as the following structure:
   ├─detectron2
 ```
 
+# Training 
+- Change the config file depending on what you want. Here, we provide a way to train KTN models
+```
+# Example: training AMANet with ResNet-50 backbone on DensePose-COCO with GPU 0 1 2 3
+CUDA_VISIBLE_DEVICES=0,1,2,3 python projects/AMA/train_net.py \
+--num-gpus 4 \
+--config-file projects/AMA/configs/densepose_AMA_R_50_FPN_s1x.yaml \
+OUTPUT_DIR work_dirs/densepose_AMA_R_50
+```
+After training, the final model is saved in OUTPUT_DIR.
+
+# Testing
+- To test the trained models saved in <work_dir>, run the following command:
+```
+CUDA_VISIBLE_DEVICES=0,1,2,3 python projects/AMA/train_net.py \
+--num-gpus 4 \
+--config-file projects/AMA/configs/densepose_AMA_R_50_FPN_s1x.yaml \
+--eval-only \
+MODEL.WEIGHTS work_dirs/densepose_AMA_R_50/model_final.pth
+```
+
 # Acknowledge
 Our code is mainly based on [DensePose](https://github.com/facebookresearch/detectron2/tree/main/projects/DensePose). 
 
