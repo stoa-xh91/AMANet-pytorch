@@ -55,11 +55,11 @@ Our code is mainly based on [DensePose](https://github.com/facebookresearch/dete
 }
 
 @inproceedings{densepose:amanet,
-title={Adaptive Multi-Path Aggregation for Human DensePose Estimation in the Wild},
-author={Guo, Yuyu and Gao, Lianli and Song, Jingkuan and Wang, Peng and Xie, Wuyuan and Shen, Heng Tao},
-pages={356--364},
-booktitle = {ACM MM},
-year={2019}
+	title={Adaptive Multi-Path Aggregation for Human DensePose Estimation in the Wild},
+	author={Guo, Yuyu and Gao, Lianli and Song, Jingkuan and Wang, Peng and Xie, Wuyuan and Shen, Heng Tao},
+	pages={356--364},
+	booktitle = {ACM MM},
+	year={2019}
 }
 
 ```
