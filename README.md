@@ -43,7 +43,7 @@ Make sure to put the files as the following structure:
 ```
 
 # Training 
-- Change the config file depending on what you want. Here, we provide a way to train KTN models
+- Change the config file depending on what you want. Here, we provide a way to train AMA models
 ```
 # Example: training AMANet with ResNet-50 backbone on DensePose-COCO with GPU 0 1 2 3
 CUDA_VISIBLE_DEVICES=0,1,2,3 python projects/AMA/train_net.py \
