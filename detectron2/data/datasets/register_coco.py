@@ -1,7 +1,9 @@
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
 import copy
+import os
 
 from detectron2.data import DatasetCatalog, MetadataCatalog
+
 from .coco import load_coco_json, load_sem_seg
 
 """
@@ -26,8 +28,11 @@ def register_coco_instances(name, metadata, json_file, image_root):
         metadata (dict): extra metadata associated with this dataset.  You can
             leave it as an empty dict.
         json_file (str): path to the json instance annotation file.
-        image_root (str): directory which contains all the images.
+        image_root (str or path-like): directory which contains all the images.
     """
+    assert isinstance(name, str), name
+    assert isinstance(json_file, (str, os.PathLike)), json_file
+    assert isinstance(image_root, (str, os.PathLike)), image_root
     # 1. register a function which returns dicts
     DatasetCatalog.register(name, lambda: load_coco_json(json_file, image_root, name))
 
@@ -49,25 +54,25 @@ def register_coco_panoptic_separated(
     It follows the setting used by the PanopticFPN paper:
 
     1. The instance annotations directly come from polygons in the COCO
-        instances annotation task, rather than from the masks in the COCO panoptic annotations.
+       instances annotation task, rather than from the masks in the COCO panoptic annotations.
 
-        The two format have small differences:
-        Polygons in the instance annotations may have overlaps.
-        The mask annotations are produced by labeling the overlapped polygons
-        with depth ordering.
+       The two format have small differences:
+       Polygons in the instance annotations may have overlaps.
+       The mask annotations are produced by labeling the overlapped polygons
+       with depth ordering.
 
     2. The semantic annotations are converted from panoptic annotations, where
-        all "things" are assigned a semantic id of 0.
-        All semantic categories will therefore have ids in contiguous
-        range [1, #stuff_categories].
+       all "things" are assigned a semantic id of 0.
+       All semantic categories will therefore have ids in contiguous
+       range [1, #stuff_categories].
 
     This function will also register a pure semantic segmentation dataset
-    named `name + '_stuffonly'`.
+    named ``name + '_stuffonly'``.
 
     Args:
         name (str): the name that identifies a dataset,
             e.g. "coco_2017_train_panoptic"
-        metadata (str): extra metadata associated with this dataset.
+        metadata (dict): extra metadata associated with this dataset.
         image_root (str): directory which contains all the images
         panoptic_root (str): directory which contains panoptic annotation images
         panoptic_json (str): path to the json panoptic annotation file

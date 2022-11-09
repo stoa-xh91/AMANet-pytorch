@@ -2,30 +2,33 @@
 import itertools
 from typing import Any, Dict, List, Tuple, Union
 import torch
-
-from detectron2.layers import cat
+import copy
 
 
 class Instances:
     """
     This class represents a list of instances in an image.
     It stores the attributes of instances (e.g., boxes, masks, labels, scores) as "fields".
-    All fields must have the same `__len__` which is the number of instances.
+    All fields must have the same ``__len__`` which is the number of instances.
 
     All other (non-field) attributes of this class are considered private:
     they must start with '_' and are not modifiable by a user.
 
     Some basic usage:
 
-    1. Set/Get a field:
-        instances.gt_boxes = Boxes(...)
-        print(instances.pred_masks)
-        print('gt_masks' in instances)
-    2. `len(instances)` returns the number of instances
-    3. Indexing: `instances[indices]` will apply the indexing on all the fields
-       and returns a new `Instances`.
-       Typically, `indices` is a binary vector of length num_instances,
-       or a vector of integer indices.
+    1. Set/get/check a field:
+
+       .. code-block:: python
+
+          instances.gt_boxes = Boxes(...)
+          print(instances.pred_masks)  # a tensor of shape (N, H, W)
+          print('gt_masks' in instances)
+
+    2. ``len(instances)`` returns the number of instances
+    3. Indexing: ``instances[indices]`` will apply the indexing on all the fields
+       and returns a new :class:`Instances`.
+       Typically, ``indices`` is a integer vector of indices,
+       or a binary mask of length ``num_instances``
     """
 
     def __init__(self, image_size: Tuple[int, int], **kwargs: Any):
@@ -100,16 +103,27 @@ class Instances:
         return self._fields
 
     # Tensor-like methods
-    def to(self, device: str) -> "Instances":
+    def to(self, *args: Any, **kwargs: Any) -> "Instances":
         """
         Returns:
-            Instances: all fields are called with a `to(device)`, if
-                the field has this method.
+            Instances: all fields are called with a `to(device)`, if the field has this method.
         """
         ret = Instances(self._image_size)
         for k, v in self._fields.items():
             if hasattr(v, "to"):
-                v = v.to(device)
+                v = v.to(*args, **kwargs)
+            ret.set(k, v)
+        return ret
+
+    def clone(self):
+        ret = Instances(self._image_size)
+        for k, v in self._fields.items():
+            if hasattr(v, "clone"):
+                v = v.clone()
+            else:
+                print(v)
+                print(type(v))
+                input()
             ret.set(k, v)
         return ret
 
@@ -122,6 +136,12 @@ class Instances:
             If `item` is a string, return the data in the corresponding field.
             Otherwise, returns an `Instances` where all fields are indexed by `item`.
         """
+        if type(item) == int:
+            if item >= len(self) or item < -len(self):
+                raise IndexError("Instances index out of range!")
+            else:
+                item = slice(item, None, len(self))
+
         ret = Instances(self._image_size)
         for k, v in self._fields.items():
             ret.set(k, v[item])
@@ -131,6 +151,9 @@ class Instances:
         for v in self._fields.values():
             return len(v)
         raise NotImplementedError("Empty Instances does not support __len__!")
+
+    def __iter__(self):
+        raise NotImplementedError("`Instances` object is not iterable!")
 
     @staticmethod
     def cat(instance_lists: List["Instances"]) -> "Instances":
@@ -154,7 +177,7 @@ class Instances:
             values = [i.get(k) for i in instance_lists]
             v0 = values[0]
             if isinstance(v0, torch.Tensor):
-                values = cat(values, dim=0)
+                values = torch.cat(values, dim=0)
             elif isinstance(v0, list):
                 values = list(itertools.chain(*values))
             elif hasattr(type(v0), "cat"):
@@ -169,16 +192,7 @@ class Instances:
         s += "num_instances={}, ".format(len(self))
         s += "image_height={}, ".format(self._image_size[0])
         s += "image_width={}, ".format(self._image_size[1])
-        s += "fields=[{}])".format(", ".join(self._fields.keys()))
+        s += "fields=[{}])".format(", ".join((f"{k}: {v}" for k, v in self._fields.items())))
         return s
 
-    def __repr__(self) -> str:
-        s = self.__class__.__name__ + "("
-        s += "num_instances={}, ".format(len(self))
-        s += "image_height={}, ".format(self._image_size[0])
-        s += "image_width={}, ".format(self._image_size[1])
-        s += "fields=["
-        for k, v in self._fields.items():
-            s += "{} = {}, ".format(k, v)
-        s += "])"
-        return s
+    __repr__ = __str__

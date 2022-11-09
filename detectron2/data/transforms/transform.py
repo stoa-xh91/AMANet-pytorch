@@ -3,10 +3,30 @@
 # File: transform.py
 
 import numpy as np
-from fvcore.transforms.transform import HFlipTransform, NoOpTransform, Transform
+import torch
+import torch.nn.functional as F
+from fvcore.transforms.transform import (
+    CropTransform,
+    HFlipTransform,
+    NoOpTransform,
+    Transform,
+    TransformList,
+)
 from PIL import Image
 
-__all__ = ["ExtentTransform", "ResizeTransform"]
+try:
+    import cv2  # noqa
+except ImportError:
+    # OpenCV is an optional dependency at the moment
+    pass
+
+__all__ = [
+    "ExtentTransform",
+    "ResizeTransform",
+    "RotationTransform",
+    "ColorTransform",
+    "PILColorTransform",
+]
 
 
 class ExtentTransform(Transform):
@@ -65,23 +85,40 @@ class ResizeTransform(Transform):
     Resize the image to a target size.
     """
 
-    def __init__(self, h, w, new_h, new_w, interp):
+    def __init__(self, h, w, new_h, new_w, interp=None):
         """
         Args:
             h, w (int): original image size
             new_h, new_w (int): new image size
-            interp: PIL interpolation methods
+            interp: PIL interpolation methods, defaults to bilinear.
         """
         # TODO decide on PIL vs opencv
         super().__init__()
+        if interp is None:
+            interp = Image.BILINEAR
         self._set_attributes(locals())
 
     def apply_image(self, img, interp=None):
         assert img.shape[:2] == (self.h, self.w)
-        pil_image = Image.fromarray(img)
-        interp_method = interp if interp is not None else self.interp
-        pil_image = pil_image.resize((self.new_w, self.new_h), interp_method)
-        ret = np.asarray(pil_image)
+        assert len(img.shape) <= 4
+
+        if img.dtype == np.uint8:
+            pil_image = Image.fromarray(img)
+            interp_method = interp if interp is not None else self.interp
+            pil_image = pil_image.resize((self.new_w, self.new_h), interp_method)
+            ret = np.asarray(pil_image)
+        else:
+            # PIL only supports uint8
+            img = torch.from_numpy(img)
+            shape = list(img.shape)
+            shape_4d = shape[:2] + [1] * (4 - len(shape)) + shape[2:]
+            img = img.view(shape_4d).permute(2, 3, 0, 1)  # hw(c) -> nchw
+            _PIL_RESIZE_TO_INTERPOLATE_MODE = {Image.BILINEAR: "bilinear", Image.BICUBIC: "bicubic"}
+            mode = _PIL_RESIZE_TO_INTERPOLATE_MODE[self.interp]
+            img = F.interpolate(img, (self.new_h, self.new_w), mode=mode, align_corners=False)
+            shape[:2] = (self.new_h, self.new_w)
+            ret = img.permute(2, 3, 0, 1).view(shape).numpy()  # nchw -> hw(c)
+
         return ret
 
     def apply_coords(self, coords):
@@ -93,10 +130,155 @@ class ResizeTransform(Transform):
         segmentation = self.apply_image(segmentation, interp=Image.NEAREST)
         return segmentation
 
+    def inverse(self):
+        return ResizeTransform(self.new_h, self.new_w, self.h, self.w, self.interp)
+
+
+class RotationTransform(Transform):
+    """
+    This method returns a copy of this image, rotated the given
+    number of degrees counter clockwise around its center.
+    """
+
+    def __init__(self, h, w, angle, expand=True, center=None, interp=None):
+        """
+        Args:
+            h, w (int): original image size
+            angle (float): degrees for rotation
+            expand (bool): choose if the image should be resized to fit the whole
+                rotated image (default), or simply cropped
+            center (tuple (width, height)): coordinates of the rotation center
+                if left to None, the center will be fit to the center of each image
+                center has no effect if expand=True because it only affects shifting
+            interp: cv2 interpolation method, default cv2.INTER_LINEAR
+        """
+        super().__init__()
+        image_center = np.array((w / 2, h / 2))
+        if center is None:
+            center = image_center
+        if interp is None:
+            interp = cv2.INTER_LINEAR
+        abs_cos, abs_sin = (abs(np.cos(np.deg2rad(angle))), abs(np.sin(np.deg2rad(angle))))
+        if expand:
+            # find the new width and height bounds
+            bound_w, bound_h = np.rint(
+                [h * abs_sin + w * abs_cos, h * abs_cos + w * abs_sin]
+            ).astype(int)
+        else:
+            bound_w, bound_h = w, h
+
+        self._set_attributes(locals())
+        self.rm_coords = self.create_rotation_matrix()
+        # Needed because of this problem https://github.com/opencv/opencv/issues/11784
+        self.rm_image = self.create_rotation_matrix(offset=-0.5)
+
+    def apply_image(self, img, interp=None):
+        """
+        img should be a numpy array, formatted as Height * Width * Nchannels
+        """
+        if len(img) == 0 or self.angle % 360 == 0:
+            return img
+        assert img.shape[:2] == (self.h, self.w)
+        interp = interp if interp is not None else self.interp
+        return cv2.warpAffine(img, self.rm_image, (self.bound_w, self.bound_h), flags=interp)
+
+    def apply_coords(self, coords):
+        """
+        coords should be a N * 2 array-like, containing N couples of (x, y) points
+        """
+        coords = np.asarray(coords, dtype=float)
+        if len(coords) == 0 or self.angle % 360 == 0:
+            return coords
+        return cv2.transform(coords[:, np.newaxis, :], self.rm_coords)[:, 0, :]
+
+    def apply_segmentation(self, segmentation):
+        segmentation = self.apply_image(segmentation, interp=cv2.INTER_NEAREST)
+        return segmentation
+
+    def create_rotation_matrix(self, offset=0):
+        center = (self.center[0] + offset, self.center[1] + offset)
+        rm = cv2.getRotationMatrix2D(tuple(center), self.angle, 1)
+        if self.expand:
+            # Find the coordinates of the center of rotation in the new image
+            # The only point for which we know the future coordinates is the center of the image
+            rot_im_center = cv2.transform(self.image_center[None, None, :] + offset, rm)[0, 0, :]
+            new_center = np.array([self.bound_w / 2, self.bound_h / 2]) + offset - rot_im_center
+            # shift the rotation center to the new coordinates
+            rm[:, 2] += new_center
+        return rm
+
+    def inverse(self):
+        """
+        The inverse is to rotate it back with expand, and crop to get the original shape.
+        """
+        if not self.expand:  # Not possible to inverse if a part of the image is lost
+            raise NotImplementedError()
+        rotation = RotationTransform(
+            self.bound_h, self.bound_w, -self.angle, True, None, self.interp
+        )
+        crop = CropTransform(
+            (rotation.bound_w - self.w) // 2, (rotation.bound_h - self.h) // 2, self.w, self.h
+        )
+        return TransformList([rotation, crop])
+
+
+class ColorTransform(Transform):
+    """
+    Generic wrapper for any photometric transforms.
+    These transformations should only affect the color space and
+        not the coordinate space of the image (e.g. annotation
+        coordinates such as bounding boxes should not be changed)
+    """
+
+    def __init__(self, op):
+        """
+        Args:
+            op (Callable): operation to be applied to the image,
+                which takes in an ndarray and returns an ndarray.
+        """
+        if not callable(op):
+            raise ValueError("op parameter should be callable")
+        super().__init__()
+        self._set_attributes(locals())
+
+    def apply_image(self, img):
+        return self.op(img)
+
+    def apply_coords(self, coords):
+        return coords
+
+    def apply_segmentation(self, segmentation):
+        return segmentation
+
+
+class PILColorTransform(ColorTransform):
+    """
+    Generic wrapper for PIL Photometric image transforms,
+        which affect the color space and not the coordinate
+        space of the image
+    """
+
+    def __init__(self, op):
+        """
+        Args:
+            op (Callable): operation to be applied to the image,
+                which takes in a PIL Image and returns a transformed
+                PIL Image.
+                For reference on possible operations see:
+                - https://pillow.readthedocs.io/en/stable/
+        """
+        if not callable(op):
+            raise ValueError("op parameter should be callable")
+        super().__init__(op)
+
+    def apply_image(self, img):
+        img = Image.fromarray(img)
+        return np.asarray(super().apply_image(img))
+
 
 def HFlip_rotated_box(transform, rotated_boxes):
     """
-    Apply the horizontal flip transform on an rotated boxes.
+    Apply the horizontal flip transform on rotated boxes.
 
     Args:
         rotated_boxes (ndarray): Nx5 floating point array of
@@ -111,12 +293,15 @@ def HFlip_rotated_box(transform, rotated_boxes):
 
 
 def Resize_rotated_box(transform, rotated_boxes):
-    # Note: when scale_factor_x != scale_factor_y,
-    # the rotated box does not preserve the rectangular shape when the angle
-    # is not a multiple of 90 degrees under resize transformation.
-    # Instead, the shape is a parallelogram (that has skew)
-    # Here we make an approximation by fitting a rotated rectangle to the
-    # parallelogram that shares the same midpoints on the left and right edge
+    """
+    Apply the resizing transform on rotated boxes. For details of how these (approximation)
+    formulas are derived, please refer to :meth:`RotatedBoxes.scale`.
+
+    Args:
+        rotated_boxes (ndarray): Nx5 floating point array of
+            (x_center, y_center, width, height, angle_degrees) format
+            in absolute coordinates.
+    """
     scale_factor_x = transform.new_w * 1.0 / transform.w
     scale_factor_y = transform.new_h * 1.0 / transform.h
     rotated_boxes[:, 0] *= scale_factor_x
@@ -124,60 +309,15 @@ def Resize_rotated_box(transform, rotated_boxes):
     theta = rotated_boxes[:, 4] * np.pi / 180.0
     c = np.cos(theta)
     s = np.sin(theta)
-
-    # In image space, y is top->down and x is left->right
-    # Consider the local coordinate system for the rotated box,
-    # where the box center is located at (0, 0), and the four vertices ABCD are
-    # A(-w / 2, -h / 2), B(w / 2, -h / 2), C(w / 2, h / 2), D(-w / 2, h / 2)
-    # the midpoint of the left edge AD of the rotated box E is:
-    # E = (A+D)/2 = (-w / 2, 0)
-    # the midpoint of the top edge AB of the rotated box F is:
-    # F(0, -h / 2)
-    # To get the old coordinates in the global system, apply the rotation transformation
-    # (Note: the right-handed coordinate system for image space is yOx):
-    # (old_x, old_y) = (s * y + c * x, c * y - s * x)
-    # E(old) = (s * 0 + c * (-w/2), c * 0 - s * (-w/2)) = (-c * w / 2, s * w / 2)
-    # F(old) = (s * (-h / 2) + c * 0, c * (-h / 2) - s * 0) = (-s * h / 2, -c * h / 2)
-    # After applying the scaling factor (sfx, sfy):
-    # E(new) = (-sfx * c * w / 2, sfy * s * w / 2)
-    # F(new) = (-sfx * s * h / 2, -sfy * c * h / 2)
-    # The new width after scaling transformation becomes:
-
-    # w(new) = |E(new) - O| * 2
-    #        = sqrt[(sfx * c * w / 2)^2 + (sfy * s * w / 2)^2] * 2
-    #        = sqrt[(sfx * c)^2 + (sfy * s)^2] * w
-    # i.e., scale_factor_w = sqrt[(sfx * c)^2 + (sfy * s)^2]
-    #
-    # For example,
-    # when angle = 0 or 180, |c| = 1, s = 0, scale_factor_w == scale_factor_x;
-    # when |angle| = 90, c = 0, |s| = 1, scale_factor_w == scale_factor_y
     rotated_boxes[:, 2] *= np.sqrt(np.square(scale_factor_x * c) + np.square(scale_factor_y * s))
-
-    # h(new) = |F(new) - O| * 2
-    #        = sqrt[(sfx * s * h / 2)^2 + (sfy * c * h / 2)^2] * 2
-    #        = sqrt[(sfx * s)^2 + (sfy * c)^2] * h
-    # i.e., scale_factor_h = sqrt[(sfx * s)^2 + (sfy * c)^2]
-    #
-    # For example,
-    # when angle = 0 or 180, |c| = 1, s = 0, scale_factor_h == scale_factor_y;
-    # when |angle| = 90, c = 0, |s| = 1, scale_factor_h == scale_factor_x
     rotated_boxes[:, 3] *= np.sqrt(np.square(scale_factor_x * s) + np.square(scale_factor_y * c))
-
-    # The angle is the rotation angle from y-axis in image space to the height
-    # vector (top->down in the box's local coordinate system) of the box in CCW.
-    #
-    # angle(new) = angle_yOx(O - F(new))
-    #            = angle_yOx( (sfx * s * h / 2, sfy * c * h / 2) )
-    #            = atan2(sfx * s * h / 2, sfy * c * h / 2)
-    #            = atan2(sfx * s, sfy * c)
-    #
-    # For example,
-    # when sfx == sfy, angle(new) == atan2(s, c) == angle(old)
     rotated_boxes[:, 4] = np.arctan2(scale_factor_x * s, scale_factor_y * c) * 180 / np.pi
 
     return rotated_boxes
 
 
 HFlipTransform.register_type("rotated_box", HFlip_rotated_box)
-NoOpTransform.register_type("rotated_box", lambda t, x: x)
 ResizeTransform.register_type("rotated_box", Resize_rotated_box)
+
+# not necessary any more with latest fvcore
+NoOpTransform.register_type("rotated_box", lambda t, x: x)

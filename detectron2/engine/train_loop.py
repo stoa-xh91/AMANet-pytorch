@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
 
+import contextlib
 import logging
 import numpy as np
 import time
@@ -13,15 +14,22 @@ from detectron2.utils.events import EventStorage
 __all__ = ["HookBase", "TrainerBase", "SimpleTrainer"]
 
 
+try:
+    _nullcontext = contextlib.nullcontext  # python 3.7+
+except AttributeError:
+
+    @contextlib.contextmanager
+    def _nullcontext(enter_result=None):
+        yield enter_result
+
+
 class HookBase:
     """
     Base class for hooks that can be registered with :class:`TrainerBase`.
 
     Each hook can implement 4 methods. The way they are called is demonstrated
     in the following snippet:
-
-    .. code-block:: python
-
+    ::
         hook.before_train()
         for iter in range(start_iter, max_iter):
             hook.before_step()
@@ -131,6 +139,9 @@ class TrainerBase:
                     self.before_step()
                     self.run_step()
                     self.after_step()
+            except Exception:
+                logger.exception("Exception during training:")
+                raise
             finally:
                 self.after_train()
 
@@ -165,6 +176,9 @@ class SimpleTrainer(TrainerBase):
     1. Compute the loss with a data from the data_loader.
     2. Compute the gradients with the above loss.
     3. Update the model with the optimizer.
+
+    All other tasks during training (checkpointing, logging, evaluation, LR schedule)
+    are maintained by hooks, which can be registered by :meth:`TrainerBase.register_hooks`.
 
     If you want to do anything fancier than this,
     either subclass TrainerBase and implement your own `run_step`,
@@ -201,32 +215,37 @@ class SimpleTrainer(TrainerBase):
         assert self.model.training, "[SimpleTrainer] model was changed to eval mode!"
         start = time.perf_counter()
         """
-        If your want to do something with the data, you can wrap the dataloader.
+        If you want to do something with the data, you can wrap the dataloader.
         """
         data = next(self._data_loader_iter)
         data_time = time.perf_counter() - start
 
         """
-        If your want to do something with the losses, you can wrap the model.
+        If you want to do something with the losses, you can wrap the model.
         """
         loss_dict = self.model(data)
-        losses = sum(loss for loss in loss_dict.values())
-        self._detect_anomaly(losses, loss_dict)
-
-        metrics_dict = loss_dict
-        metrics_dict["data_time"] = data_time
-        self._write_metrics(metrics_dict)
+        losses = sum(loss_dict.values())
 
         """
-        If you need accumulate gradients or something similar, you can
+        If you need to accumulate gradients or do something similar, you can
         wrap the optimizer with your custom `zero_grad()` method.
         """
         self.optimizer.zero_grad()
         losses.backward()
 
+        # use a new stream so the ops don't wait for DDP
+        with torch.cuda.stream(
+            torch.cuda.Stream()
+        ) if losses.device.type == "cuda" else _nullcontext():
+            metrics_dict = loss_dict
+            metrics_dict["data_time"] = data_time
+            self._write_metrics(metrics_dict)
+            self._detect_anomaly(losses, loss_dict)
+
         """
         If you need gradient clipping/scaling or other processing, you can
-        wrap the optimizer with your custom `step()` method.
+        wrap the optimizer with your custom `step()` method. But it is
+        suboptimal as explained in https://arxiv.org/abs/2006.15704 Sec 3.2.4
         """
         self.optimizer.step()
 

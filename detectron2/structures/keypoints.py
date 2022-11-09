@@ -8,11 +8,11 @@ from detectron2.layers import interpolate
 
 class Keypoints:
     """
-    Stores keypoint annotation data. GT Instances have a `gt_keypoints` property
+    Stores keypoint **annotation** data. GT Instances have a `gt_keypoints` property
     containing the x,y location and visibility flag of each keypoint. This tensor has shape
     (N, K, 3) where N is the number of instances and K is the number of keypoints per instance.
 
-    The visiblity flag follows the COCO format and must be one of three integers:
+    The visibility flag follows the COCO format and must be one of three integers:
     * v=0: not labeled (in which case x=y=0)
     * v=1: labeled but not visible
     * v=2: labeled and visible
@@ -36,36 +36,33 @@ class Keypoints:
     def to(self, *args: Any, **kwargs: Any) -> "Keypoints":
         return type(self)(self.tensor.to(*args, **kwargs))
 
+    @property
+    def device(self) -> torch.device:
+        return self.tensor.device
+
     def to_heatmap(self, boxes: torch.Tensor, heatmap_size: int) -> torch.Tensor:
         """
+        Convert keypoint annotations to a heatmap of one-hot labels for training,
+        as described in :paper:`Mask R-CNN`.
+
         Arguments:
             boxes: Nx4 tensor, the boxes to draw the keypoints to
 
         Returns:
-            heatmaps: A tensor of shape (N, K) containing an integer spatial label
+            heatmaps:
+                A tensor of shape (N, K), each element is integer spatial label
                 in the range [0, heatmap_size**2 - 1] for each keypoint in the input.
-            valid: A tensor of shape (N, K) containing whether each keypoint is in
-                the roi or not.
+            valid:
+                A tensor of shape (N, K) containing whether each keypoint is in the roi or not.
         """
         return _keypoints_to_heatmap(self.tensor, boxes, heatmap_size)
-
-    def to_inter_heatmap(self, boxes: torch.Tensor, heatmap_size: int) -> torch.Tensor:
-        """
-        Arguments:
-            boxes: Nx4 tensor, the boxes to draw the keypoints to
-
-        Returns:
-            heatmaps: A tensor of shape (N, K, heatmap_size, heatmap_size)
-            valid: A tensor of shape (N, K) containing whether each keypoint is in
-                the roi or not.
-        """
-        return _keypoints_to_inter_heatmap(self.tensor, boxes, heatmap_size)
 
     def __getitem__(self, item: Union[int, slice, torch.BoolTensor]) -> "Keypoints":
         """
         Create a new `Keypoints` by indexing on this `Keypoints`.
 
         The following usage are allowed:
+
         1. `new_kpts = kpts[3]`: return a `Keypoints` which contains only one instance.
         2. `new_kpts = kpts[2:10]`: return a slice of key points.
         3. `new_kpts = kpts[vector]`, where vector is a torch.ByteTensor
@@ -144,118 +141,23 @@ def _keypoints_to_heatmap(
     return heatmaps, valid
 
 
-def _keypoints_to_inter_heatmap(
-    keypoints: torch.Tensor, rois: torch.Tensor, heatmap_size: int
-) -> Tuple[torch.Tensor, torch.Tensor]:
-    """
-    Encode keypoint locations into a target heatmap for use in SoftmaxWithLoss across space.
-
-    Maps keypoints from the half-open interval [x1, x2) on continuous image coordinates to the
-    closed interval [0, heatmap_size - 1] on discrete image coordinates. We use the
-    continuous-discrete conversion from Heckbert 1990 ("What is the coordinate of a pixel?"):
-    d = floor(c) and c = d + 0.5, where d is a discrete coordinate and c is a continuous coordinate.
-
-    Arguments:
-        keypoints: tensor of keypoint locations in of shape (N, K, 3).
-        rois: Nx4 tensor of rois in xyxy format
-        heatmap_size: integer side length of square heatmap.
-
-    Returns:
-        heatmaps: A tensor of shape (N, K) containing an integer spatial label
-            in the range [0, heatmap_size**2 - 1] for each keypoint in the input.
-        valid: A tensor of shape (N, K) containing whether each keypoint is in
-            the roi or not.
-    """
-
-    if rois.numel() == 0:
-        return rois.new().long(), rois.new().long()
-    offset_x = rois[:, 0]
-    offset_y = rois[:, 1]
-    scale_x = heatmap_size / (rois[:, 2] - rois[:, 0])
-    scale_y = heatmap_size / (rois[:, 3] - rois[:, 1])
-
-    offset_x = offset_x[:, None]
-    offset_y = offset_y[:, None]
-    scale_x = scale_x[:, None]
-    scale_y = scale_y[:, None]
-
-    x = keypoints[..., 0]
-    y = keypoints[..., 1]
-
-    x_boundary_inds = x == rois[:, 2][:, None]
-    y_boundary_inds = y == rois[:, 3][:, None]
-
-    x = (x - offset_x) * scale_x
-    x = x.floor().long()
-    y = (y - offset_y) * scale_y
-    y = y.floor().long()
-
-    x[x_boundary_inds] = heatmap_size - 1
-    y[y_boundary_inds] = heatmap_size - 1
-
-    valid_loc = (x >= 0) & (y >= 0) & (x < heatmap_size) & (y < heatmap_size)
-    vis = keypoints[..., 2] > 0
-    valid = (valid_loc & vis).long()
-
-    # lin_ind = y * heatmap_size + x
-    heatmaps = torch.zeros((keypoints.size(0)*keypoints.size(1), heatmap_size, heatmap_size))
-    _x = (x[valid == 1]).flatten()
-    _y = (y[valid == 1]).flatten()
-    if len(x) == 0:
-        return heatmaps, valid
-    xlo = _x - 1
-    xlo = xlo.clamp(min=0, max=heatmap_size-1)
-    ylo = _y - 1
-    ylo = ylo.clamp(min=0, max=heatmap_size-1)
-    xhi = _x + 1
-    xhi = xhi.clamp(min=0, max=heatmap_size-1)
-    yhi = _y + 1
-    yhi = yhi.clamp(min=0, max=heatmap_size-1)
-    # heatmaps[valid.flatten() == 1, ylo, xlo] = 1
-    # heatmaps[valid.flatten() == 1, _y, xlo] = 1
-    # heatmaps[valid.flatten() == 1, yhi, xlo] = 1
-    # heatmaps[valid.flatten() == 1, ylo, _x] = 1
-    # heatmaps[valid.flatten() == 1, _y, _x] = 1
-    # heatmaps[valid.flatten() == 1, yhi, _x] = 1
-    # heatmaps[valid.flatten() == 1, ylo, xhi] = 1
-    # heatmaps[valid.flatten() == 1, _y, xhi] = 1
-    # heatmaps[valid.flatten() == 1, yhi, xhi] = 1
-    heatmaps[valid.flatten()==1, ylo, xlo] = 1.*np.exp(-1)
-    heatmaps[valid.flatten()==1, _y, xlo] = 1.*np.exp(-0.5)
-    heatmaps[valid.flatten()==1, yhi, xlo] = 1.*np.exp(-1)
-    heatmaps[valid.flatten()==1, ylo, _x] = np.exp(-0.5)
-    heatmaps[valid.flatten()==1, _y, _x] = 1
-    heatmaps[valid.flatten()==1, yhi, _x] = np.exp(-0.5)
-    heatmaps[valid.flatten()==1, ylo, xhi] = np.exp(-0.5)
-    heatmaps[valid.flatten()==1, _y, xhi] = np.exp(-0.5)
-    heatmaps[valid.flatten()==1, yhi, xhi] = np.exp(-1)
-    # heatmaps[slice(None), slice(None), ylo, xlo] = 1
-    # heatmaps[slice(None), slice(None), y, xlo]   = 1
-    # heatmaps[slice(None), slice(None), yhi, xlo] = 1
-    # heatmaps[slice(None), slice(None), ylo, x]   = 1
-    # heatmaps[slice(None), slice(None), y, x]     = 1
-    # heatmaps[slice(None), slice(None), yhi, x]   = 1
-    # heatmaps[slice(None), slice(None), ylo, xhi] = 1
-    # heatmaps[slice(None), slice(None), y, xhi]   = 1
-    # heatmaps[slice(None), slice(None), yhi, xhi] = 1
-    # heatmaps = lin_ind * valid
-    heatmaps = heatmaps.reshape((keypoints.size(0),keypoints.size(1),heatmap_size,heatmap_size))
-    return heatmaps, valid
-
 @torch.no_grad()
 def heatmaps_to_keypoints(maps: torch.Tensor, rois: torch.Tensor) -> torch.Tensor:
     """
+    Extract predicted keypoint locations from heatmaps.
+
     Args:
-        maps (Tensor): (#ROIs, #keypoints, POOL_H, POOL_W)
-        rois (Tensor): (#ROIs, 4)
+        maps (Tensor): (#ROIs, #keypoints, POOL_H, POOL_W). The predicted heatmap of logits for
+            each ROI and each keypoint.
+        rois (Tensor): (#ROIs, 4). The box of each ROI.
 
-    Extract predicted keypoint locations from heatmaps. Output has shape
-    (#rois, #keypoints, 4) with the last dimension corresponding to (x, y, logit, prob)
-    for each keypoint.
+    Returns:
+        Tensor of shape (#ROIs, #keypoints, 4) with the last dimension corresponding to
+        (x, y, logit, score) for each keypoint.
 
-    Converts a discrete image coordinate in an NxN image to a continuous keypoint coordinate. We
-    maintain consistency with keypoints_to_heatmap by using the conversion from Heckbert 1990:
-    c = d + 0.5, where d is a discrete coordinate and c is a continuous coordinate.
+    When converting discrete pixel indices in an NxN image to a continuous keypoint coordinate,
+    we maintain consistency with :meth:`Keypoints.to_heatmap` by using the conversion from
+    Heckbert 1990: c = d + 0.5, where d is a discrete coordinate and c is a continuous coordinate.
     """
     offset_x = rois[:, 0]
     offset_y = rois[:, 1]
@@ -284,9 +186,9 @@ def heatmaps_to_keypoints(maps: torch.Tensor, rois: torch.Tensor) -> torch.Tenso
         max_score = max_score.view(num_keypoints, 1, 1)
         tmp_full_resolution = (roi_map - max_score).exp_()
         tmp_pool_resolution = (maps[i] - max_score).exp_()
-        # Produce scores over the region H x W, but normalize with POOL_H x POOL_W
-        # So that the scores of objects of different absolute sizes will be more comparable
-        roi_map_probs = tmp_full_resolution / tmp_pool_resolution.sum((1, 2), keepdim=True)
+        # Produce scores over the region H x W, but normalize with POOL_H x POOL_W,
+        # so that the scores of objects of different absolute sizes will be more comparable
+        roi_map_scores = tmp_full_resolution / tmp_pool_resolution.sum((1, 2), keepdim=True)
 
         w = roi_map.shape[2]
         pos = roi_map.view(num_keypoints, -1).argmax(1)
@@ -295,8 +197,8 @@ def heatmaps_to_keypoints(maps: torch.Tensor, rois: torch.Tensor) -> torch.Tenso
         y_int = (pos - x_int) // w
 
         assert (
-            roi_map_probs[keypoints_idx, y_int, x_int]
-            == roi_map_probs.view(num_keypoints, -1).max(1)[0]
+            roi_map_scores[keypoints_idx, y_int, x_int]
+            == roi_map_scores.view(num_keypoints, -1).max(1)[0]
         ).all()
 
         x = (x_int.float() + 0.5) * width_corrections[i]
@@ -305,6 +207,6 @@ def heatmaps_to_keypoints(maps: torch.Tensor, rois: torch.Tensor) -> torch.Tenso
         xy_preds[i, :, 0] = x + offset_x[i]
         xy_preds[i, :, 1] = y + offset_y[i]
         xy_preds[i, :, 2] = roi_map[keypoints_idx, y_int, x_int]
-        xy_preds[i, :, 3] = roi_map_probs[keypoints_idx, y_int, x_int]
+        xy_preds[i, :, 3] = roi_map_scores[keypoints_idx, y_int, x_int]
 
     return xy_preds

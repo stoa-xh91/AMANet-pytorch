@@ -1,6 +1,8 @@
 // Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
 #pragma once
-#include <torch/extension.h>
+#include <torch/types.h>
+
+namespace detectron2 {
 
 at::Tensor ROIAlign_forward_cpu(
     const at::Tensor& input,
@@ -24,7 +26,7 @@ at::Tensor ROIAlign_backward_cpu(
     const int sampling_ratio,
     bool aligned);
 
-#ifdef WITH_CUDA
+#if defined(WITH_CUDA) || defined(WITH_HIP)
 at::Tensor ROIAlign_forward_cuda(
     const at::Tensor& input,
     const at::Tensor& rois,
@@ -57,8 +59,8 @@ inline at::Tensor ROIAlign_forward(
     const int pooled_width,
     const int sampling_ratio,
     bool aligned) {
-  if (input.type().is_cuda()) {
-#ifdef WITH_CUDA
+  if (input.is_cuda()) {
+#if defined(WITH_CUDA) || defined(WITH_HIP)
     return ROIAlign_forward_cuda(
         input,
         rois,
@@ -93,8 +95,8 @@ inline at::Tensor ROIAlign_backward(
     const int width,
     const int sampling_ratio,
     bool aligned) {
-  if (grad.type().is_cuda()) {
-#ifdef WITH_CUDA
+  if (grad.is_cuda()) {
+#if defined(WITH_CUDA) || defined(WITH_HIP)
     return ROIAlign_backward_cuda(
         grad,
         rois,
@@ -124,3 +126,5 @@ inline at::Tensor ROIAlign_backward(
       sampling_ratio,
       aligned);
 }
+
+} // namespace detectron2

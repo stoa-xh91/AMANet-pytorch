@@ -113,7 +113,7 @@ __global__ void RoIAlignForward(
         (sampling_ratio > 0) ? sampling_ratio : ceil(roi_width / pooled_width);
 
     // We do average (integral) pooling inside a bin
-    // When the grid is empty, output zeros.
+    // When the grid is empty, output zeros == 0/1, instead of NaN.
     const T count = max(roi_bin_grid_h * roi_bin_grid_w, 1); // e.g. = 4
 
     T output_val = 0.;
@@ -305,6 +305,8 @@ __global__ void RoIAlignBackwardFeature(
   } // CUDA_1D_KERNEL_LOOP
 } // RoIAlignBackward
 
+namespace detectron2 {
+
 at::Tensor ROIAlign_forward_cuda(
     const at::Tensor& input,
     const at::Tensor& rois,
@@ -332,7 +334,10 @@ at::Tensor ROIAlign_forward_cuda(
   auto output_size = num_rois * pooled_height * pooled_width * channels;
   cudaStream_t stream = at::cuda::getCurrentCUDAStream();
 
-  dim3 grid(std::min(at::cuda::ATenCeilDiv(output_size, 512L), 4096L));
+  dim3 grid(std::min(
+      at::cuda::ATenCeilDiv(
+          static_cast<int64_t>(output_size), static_cast<int64_t>(512)),
+      static_cast<int64_t>(4096)));
   dim3 block(512);
 
   if (output.numel() == 0) {
@@ -340,10 +345,11 @@ at::Tensor ROIAlign_forward_cuda(
     return output;
   }
 
+  auto input_ = input.contiguous(), rois_ = rois.contiguous();
   AT_DISPATCH_FLOATING_TYPES(input.scalar_type(), "ROIAlign_forward", [&] {
     RoIAlignForward<scalar_t><<<grid, block, 0, stream>>>(
         output_size,
-        input.contiguous().data_ptr<scalar_t>(),
+        input_.data_ptr<scalar_t>(),
         spatial_scale,
         channels,
         height,
@@ -351,7 +357,7 @@ at::Tensor ROIAlign_forward_cuda(
         pooled_height,
         pooled_width,
         sampling_ratio,
-        rois.contiguous().data_ptr<scalar_t>(),
+        rois_.data_ptr<scalar_t>(),
         output.data_ptr<scalar_t>(),
         aligned);
   });
@@ -388,7 +394,10 @@ at::Tensor ROIAlign_backward_cuda(
 
   cudaStream_t stream = at::cuda::getCurrentCUDAStream();
 
-  dim3 grid(std::min(at::cuda::ATenCeilDiv(grad.numel(), 512L), 4096L));
+  dim3 grid(std::min(
+      at::cuda::ATenCeilDiv(
+          static_cast<int64_t>(grad.numel()), static_cast<int64_t>(512)),
+      static_cast<int64_t>(4096)));
   dim3 block(512);
 
   // handle possibly empty gradients
@@ -397,10 +406,11 @@ at::Tensor ROIAlign_backward_cuda(
     return grad_input;
   }
 
+  auto grad_ = grad.contiguous(), rois_ = rois.contiguous();
   AT_DISPATCH_FLOATING_TYPES(grad.scalar_type(), "ROIAlign_backward", [&] {
     RoIAlignBackwardFeature<scalar_t><<<grid, block, 0, stream>>>(
         grad.numel(),
-        grad.contiguous().data_ptr<scalar_t>(),
+        grad_.data_ptr<scalar_t>(),
         num_rois,
         spatial_scale,
         channels,
@@ -410,9 +420,11 @@ at::Tensor ROIAlign_backward_cuda(
         pooled_width,
         sampling_ratio,
         grad_input.data_ptr<scalar_t>(),
-        rois.contiguous().data_ptr<scalar_t>(),
+        rois_.data_ptr<scalar_t>(),
         aligned);
   });
   AT_CUDA_CHECK(cudaGetLastError());
   return grad_input;
 }
+
+} // namespace detectron2
