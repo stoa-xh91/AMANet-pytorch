@@ -19,7 +19,6 @@ from detectron2.evaluation import COCOEvaluator, DatasetEvaluators, verify_resul
 from detectron2.utils.logger import setup_logger
 
 from densepose import DatasetMapper, DensePoseCOCOEvaluator, add_densepose_config
-# os.environ["CUDA_VISIBLE_DEVICES"] = "5"
 
 class Trainer(DefaultTrainer):
     @classmethod

@@ -26,7 +26,6 @@ from densepose.vis.densepose import (
     DensePoseResultsVVisualizer,
 )
 from densepose.vis.extractor import CompoundExtractor, create_extractor
-os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 DOC = """Apply Net - a tool to print / visualize DensePose results
 """
 
@@ -60,17 +59,14 @@ class InferenceAction(Action):
     @classmethod
     def add_arguments(cls: type, parser: argparse.ArgumentParser):
         super(InferenceAction, cls).add_arguments(parser)
-        # parser.add_argument("--cfg", default="/home/wangxuanhan/research/project/detectron2-master/projects/DensePose/configs/AMA/densepose_AMA_IA_3xDeConv_bbox_distill_R_50_FPN_s1x.yaml",required=False, metavar="<config>", help="Config file")
-        # parser.add_argument("--model",default="/home/wangxuanhan/research/project/detectron2-master/coco_ama_exps/Res50_ama_bbox_distill_2_surface_1lx/model_final.pth", required=False, metavar="<model>", help="Model file")
-        # parser.add_argument("--input",default="/home/wangxuanhan/research/project/detectron2-master/projects/DensePose/vis_miniset/*.jpg",required=False, metavar="<input>", help="Input data")
         parser.add_argument("--cfg",
-                            default="/home/wangxuanhan/research/project/detectron2-master/projects/DensePose/configs/KTN/densepose_R_50_FPN_KTNv2_all2D_net_s1x.yaml",
+                            default="",
                             required=False, metavar="<config>", help="Config file")
         parser.add_argument("--model",
-                            default="/home/wangxuanhan/research/project/detectron2-master/coco_ktn_exps/Res50_ktnv2_all2d_ktn_predictorv2_1lx/model_final.pth",
+                            default="",
                             required=False, metavar="<model>", help="Model file")
         parser.add_argument("--input",
-                            default="/home/wangxuanhan/research/project/detectron2-master/projects/DensePose/vis_miniset/*.jpg",
+                            default="",
                             required=False, metavar="<input>", help="Input data")
     @classmethod
     def execute(cls: type, args: argparse.Namespace):
