@@ -3,20 +3,13 @@
 # File:
 
 import torch
-import numpy as np
-from typing import Dict
 from torch import nn
-# from typing import Any, Iterator, List, Union
-# import pycocotools.mask as mask_utils
-# from torch.nn import functional as F
-from detectron2.layers import Conv2d, ShapeSpec, get_norm
-# import fvcore.nn.weight_init as weight_init
+
+from detectron2.layers import ShapeSpec
+
 from detectron2.modeling import ROI_HEADS_REGISTRY, StandardROIHeads
 from detectron2.modeling.poolers import ROIPooler, MultiROIPooler
 
-import fvcore.nn.weight_init as weight_init
-from torch.nn import functional as F
-# Is this function good to expose as an API?
 from detectron2.modeling.roi_heads.roi_heads import select_foreground_proposals, select_proposals_with_visible_keypoints
 from detectron2.modeling.roi_heads.keypoint_head import keypoint_rcnn_inference,keypoint_rcnn_loss
 from .densepose_head import (
@@ -32,7 +25,6 @@ from .densepose_head import (
 )
 from .semantic_mask_head import (
     build_semantic_mask_data_filter,
-    MIDPredictor,
     DpSemSegFPNHead
 )
 
@@ -56,33 +48,10 @@ class DensePoseROIHeads(StandardROIHeads):
 
         if not self.dp_semseg_on:
             return
-        input_shape = {
-            name: ShapeSpec(
-                channels=self.feature_channels[name], stride=self.feature_strides[name]
-            )
-            for name in self.in_features
-        }
         self.common_stride = cfg.MODEL.SEM_SEG_HEAD.COMMON_STRIDE
-        if self.use_mid:
-            self.dp_semseg_head = MIDPredictor(cfg)
-        else:
-            self.dp_semseg_head = MIDPredictor(cfg)
-        #     self.dp_semseg_head = DpSemSegFPNHead(cfg, input_shape)
+        self.dp_semseg_head = DpSemSegFPNHead(cfg)
         self.sem_mask_data_filter = build_semantic_mask_data_filter(cfg)
-        # pooler_scales = [1.0 / self.feature_strides[self.in_features[0]]]
-        # self.sematic_mask_pooler = MultiROIPooler(
-        #         output_size=[[28,28]],
-        #         scales=pooler_scales,
-        #         sampling_ratio=cfg.MODEL.ROI_DENSEPOSE_HEAD.POOLER_SAMPLING_RATIO,
-        #         pooler_type=cfg.MODEL.ROI_DENSEPOSE_HEAD.POOLER_TYPE,
-        #         canonical_level=2,
-        #     )
-        # self.sematic_mask_pooler = ROIPooler(
-        #     output_size=cfg.MODEL.ROI_DENSEPOSE_HEAD.POOLER_RESOLUTION,
-        #     scales=tuple(1.0 / self.feature_strides[k] for k in self.in_features),
-        #     sampling_ratio=cfg.MODEL.ROI_DENSEPOSE_HEAD.POOLER_SAMPLING_RATIO,
-        #     pooler_type=cfg.MODEL.ROI_DENSEPOSE_HEAD.POOLER_TYPE,
-        # )
+      
 
     def _init_dp_keypoint_head(self, cfg,input_shape):
         # fmt: off
@@ -94,10 +63,10 @@ class DensePoseROIHeads(StandardROIHeads):
         self.keypoint_loss_weight                = cfg.MODEL.ROI_KEYPOINT_HEAD.LOSS_WEIGHT
         dp_pooler_resolution = cfg.MODEL.ROI_DENSEPOSE_HEAD.POOLER_RESOLUTION
         # dp_multi_pooler_res        = ((28,28),(14,14),(14,14),(7,7))
-        dp_pooler_scales = tuple(1.0 / self.feature_strides[k] for k in self.in_features)
+        dp_pooler_scales = tuple(1.0 / input_shape[k].stride for k in self.in_features)
         dp_pooler_sampling_ratio = cfg.MODEL.ROI_DENSEPOSE_HEAD.POOLER_SAMPLING_RATIO
         dp_pooler_type = cfg.MODEL.ROI_DENSEPOSE_HEAD.POOLER_TYPE
-        in_channels = [self.feature_channels[f] for f in self.in_features][0]
+        in_channels = [input_shape[f].channels for f in self.in_features][0]
         if not self.densepose_on:
             self.use_mid = cfg.MODEL.ROI_DENSEPOSE_HEAD.MID_ON
 
@@ -128,8 +97,7 @@ class DensePoseROIHeads(StandardROIHeads):
             return
         self.densepose_data_filter = build_densepose_data_filter(cfg)
         dp_pooler_resolution       = cfg.MODEL.ROI_DENSEPOSE_HEAD.POOLER_RESOLUTION
-        # dp_multi_pooler_res        = ((28,28),(14,14),(14,14),(7,7))
-        dp_pooler_scales           = tuple(1.0 / self.feature_strides[k] for k in self.in_features)
+        dp_pooler_scales           = tuple(1.0 / input_shape[k].stride for k in self.in_features)
         dp_pooler_sampling_ratio   = cfg.MODEL.ROI_DENSEPOSE_HEAD.POOLER_SAMPLING_RATIO
         dp_pooler_type             = cfg.MODEL.ROI_DENSEPOSE_HEAD.POOLER_TYPE
         self.use_mid = cfg.MODEL.ROI_DENSEPOSE_HEAD.MID_ON
@@ -140,10 +108,9 @@ class DensePoseROIHeads(StandardROIHeads):
             self.inter_super_on = True
 
         # fmt: on
-        in_channels = [self.feature_channels[f] for f in self.in_features][0]
+        in_channels = [input_shape[f].channels for f in self.in_features][0]
         if cfg.MODEL.ROI_DENSEPOSE_HEAD.NAME == 'DensePoseAMAHead':
             self.densepose_pooler = MultiROIPooler(
-                # output_size=[[28,28],[14,14],[14,14],[7,7]],
                 output_size=[[32, 32], [16, 16], [16, 16], [8, 8]],
                 scales=dp_pooler_scales,
                 sampling_ratio=dp_pooler_sampling_ratio,
@@ -171,11 +138,10 @@ class DensePoseROIHeads(StandardROIHeads):
         if self.training:
             im_h, im_w = int(features[0].size(2)* self.common_stride), \
                          int(features[0].size(3)* self.common_stride)
-            # proposals_with_targets, _ = select_foreground_proposals(instances, self.num_classes)
-            # gt_sem_seg = self.sem_mask_data_filter(proposals_with_targets, im_h, im_w)
+            
             gt_sem_seg = self.sem_mask_data_filter(extra, im_h, im_w)
             sem_seg_results, sem_seg_losses, latent_features = self.dp_semseg_head(features, gt_sem_seg)
-            # sem_seg_results = gt_sem_seg.float().unsqueeze(1)
+            
         else:
             gt_sem_seg = None
             sem_seg_results, sem_seg_losses, latent_features = self.dp_semseg_head(features, gt_sem_seg)
@@ -215,10 +181,7 @@ class DensePoseROIHeads(StandardROIHeads):
             proposals = select_proposals_with_visible_keypoints(proposals)
             # proposals = self.keypoint_data_filter(proposals)
             proposal_boxes = [x.proposal_boxes for x in proposals]
-            # print('after:',len(proposal_boxes))
-            # if len(proposal_boxes) == 0:
-            #     return {"loss_keypoint": 0.}
-            # if len(proposal_boxes) > 0:
+            
             if self.use_mid:
                 features = [self.mid_decoder(features)]
             keypoint_features = self.densepose_pooler(features, proposal_boxes)
@@ -231,11 +194,7 @@ class DensePoseROIHeads(StandardROIHeads):
                 * self.positive_sample_fraction
                 * keypoint_logits.shape[1]
             )
-            # loss = dp_keypoint_rcnn_loss(
-            #     keypoint_logits,
-            #     instances,
-            #     normalizer=None if self.normalize_loss_by_visible_keypoints else normalizer,
-            # )
+           
             loss = keypoint_rcnn_loss(
                 keypoint_logits,
                 proposals,
@@ -290,7 +249,6 @@ class DensePoseROIHeads(StandardROIHeads):
                     densepose_head_outputs, densepose_inter_head_outputs = self.densepose_head(features_dp)
                     densepose_outputs,  densepose_inter_outputs= self.densepose_predictor(densepose_head_outputs, densepose_inter_head_outputs)
                     densepose_loss_dict = self.densepose_losses(proposals_dp, densepose_outputs, cls_emb_loss_on=True)
-                    # inter_loss_dict = self.densepose_losses(proposals_dp, densepose_inter_outputs, 'inter_')
                     inter_loss_dict = self.densepose_inter_losses(proposals_dp, densepose_inter_outputs, 'inter_')
                     for _, k in enumerate(inter_loss_dict.keys()):
                         if k == 'inter_loss_densepose_M':
@@ -299,7 +257,6 @@ class DensePoseROIHeads(StandardROIHeads):
                             densepose_loss_dict[k] = inter_loss_dict[k] * 0.
                 else:
                     densepose_head_outputs = self.densepose_head(features_dp)
-                    # densepose_outputs, _ = self.densepose_predictor(densepose_head_outputs, bbox_params)
                     densepose_outputs, dp_outputs_from_kpt, dp_outputs_from_bbox = self.densepose_predictor(densepose_head_outputs, bbox_params)
                     if self.dp_keypoint_on:
                         keypoints_output = densepose_outputs[-1]
@@ -323,8 +280,6 @@ class DensePoseROIHeads(StandardROIHeads):
             pred_boxes = [x.pred_boxes for x in instances]
             if self.use_mid:
                 features = [self.mid_decoder(features)]
-                # if self.dp_semseg_on:
-                #     segm_res, seg_losses, latent_features = self._forward_semsegs(features, instances, extra)
             features_dp = self.densepose_pooler(features, pred_boxes)
             if len(features_dp) > 0:
                 if self.inter_super_on:
@@ -414,12 +369,9 @@ class DensePoseROIHeads(StandardROIHeads):
         else:
             pred_boxes = [x.pred_boxes for x in instances]
             features_dp = self.densepose_pooler(features, pred_boxes)
-            # if len(features_dp[0]) == 0:
-            #     print('no proposal:', len(pred_boxes),pred_boxes)
             if len(features_dp[0]) > 0 and len(pred_boxes) > 0:
 
                 densepose_head_outputs, densepose_inter_head_outputs = self.densepose_head(features_dp, latent_features)
-                # densepose_head_outputs, densepose_inter_head_outputs = self.densepose_head(features_dp)
                 bbox_locs_params = self.box_predictor.bbox_pred.weight
                 bbox_cls_params = self.box_predictor.cls_score.weight
                 bbox_params = torch.cat([bbox_cls_params, bbox_locs_params], dim=0)
@@ -436,8 +388,6 @@ class DensePoseROIHeads(StandardROIHeads):
                 densepose_outputs = tuple([empty_tensor] * 5)
 
             densepose_inference(densepose_outputs, instances)
-            # if self.dp_keypoint_on:
-            #     instances = self._forward_dp_keypoint(keypoints_output, instances)
             return instances
 
     def forward(self, images, features, proposals, targets=None, extra=None):
