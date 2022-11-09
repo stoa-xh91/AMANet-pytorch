@@ -63,6 +63,17 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 python projects/AMA/train_net.py \
 MODEL.WEIGHTS work_dirs/densepose_AMA_R_50/model_final.pth
 ```
 
+- Alternatively, you can test our pre-trained model saved in [Baidu](https://pan.baidu.com/s/14ahq99-GRbLqkrTS7NadOA?pwd=p2nc) (p2nc). Run the following command:
+
+```
+# Example: testing AMAv2 with ResNet-50 backbone
+CUDA_VISIBLE_DEVICES=0,1,2,3 python projects/AMA/train_net.py \
+--num-gpus 4 \
+--config-file projects/AMA/configs/densepose_AMA_R_50_FPN_s1x.yaml \
+--eval-only \
+MODEL.WEIGHTS ./models/COCO_AMAv2_R50.pth
+```
+
 # Acknowledge
 Our code is mainly based on [DensePose](https://github.com/facebookresearch/detectron2/tree/main/projects/DensePose). 
 
