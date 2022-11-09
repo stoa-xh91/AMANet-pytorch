@@ -79,36 +79,6 @@ class DpSemSegFPNHead(nn.Module):
         else:
             return F.softmax(x, 1)[:,1].unsqueeze(1), {}, global_features
 
-class MIDPredictor(nn.Module):
-    def __init__(self, cfg):
-        super().__init__()
-
-        # fmt: off
-        in_features      = cfg.MODEL.ROI_DENSEPOSE_HEAD.DECODER_OUT_DIMS
-        num_classes           = cfg.MODEL.ROI_HEADS.NUM_CLASSES
-        self.loss_weight      = cfg.MODEL.ROI_DENSEPOSE_HEAD.SEMSEG_WEIGHTS
-        # fmt: on
-
-        self.sem_projector = Conv2d(in_features, in_features, kernel_size=3, stride=1, padding=1)
-        self.predictor = Conv2d(in_features, num_classes + 1, kernel_size=1, stride=1, padding=0)
-        weight_init.c2_msra_fill(self.sem_projector)
-        weight_init.c2_msra_fill(self.predictor)
-
-    def forward(self, features, targets=None):
-        if isinstance(features,list):
-            features = features[0]
-        global_features = F.relu(self.sem_projector(features))
-        x = self.predictor(global_features)
-        if self.training:
-            losses = {}
-            losses["loss_dp_sem_seg"] = (
-                F.cross_entropy(x, targets, reduction="mean")
-                * self.loss_weight
-            )
-            return F.softmax(x, 1)[:,1].unsqueeze(1), losses, global_features
-        else:
-            return F.softmax(x, 1)[:,1].unsqueeze(1), {}, global_features
-
 
 class SemanticMaskDataFilter(object):
     def __init__(self, cfg):
@@ -156,14 +126,7 @@ class SemanticMaskDataFilterV2(object):
 
     @torch.no_grad()
     def __call__(self, semseg_with_targets, im_h, im_w):
-        # gt_masks_for_all_images = []
-        # for mask_per_image in semseg_with_targets:
-        #
-        #     gt_masks_per_image = F.interpolate(mask_per_image.unsqueeze(0).unsqueeze(0),
-        #                                        (int(im_h / self.common_stride), int(im_w / self.common_stride)),
-        #                                        mode="bilinear", align_corners=False)
-        #     gt_masks_for_all_images.append(gt_masks_per_image)
-        # gt_masks_for_all_images = torch.cat(gt_masks_for_all_images, 0)
+        
         gt_masks_for_all_images = F.interpolate(semseg_with_targets.tensor.unsqueeze(1),
                       (int(im_h / self.common_stride), int(im_w / self.common_stride)), mode="bilinear",
                       align_corners=False)

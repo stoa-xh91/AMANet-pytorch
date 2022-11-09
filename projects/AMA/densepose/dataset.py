@@ -37,6 +37,6 @@ for key, (image_root, json_file) in SPLITS.items():
     register_coco_instances(
         key,
         get_densepose_metadata(),
-        os.path.join("/home/wangxuanhan/research/project/detectron2-master/datasets", json_file),
-        os.path.join("/home/wangxuanhan/research/project/detectron2-master/datasets", image_root),
+        os.path.join("./datasets", json_file),
+        os.path.join("./datasets", image_root),
     )

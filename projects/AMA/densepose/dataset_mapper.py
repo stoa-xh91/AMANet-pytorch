@@ -97,7 +97,7 @@ class DatasetMapper:
             gt_densepose = [obj["densepose"] for obj in annos]
             instances.gt_densepose = DensePoseList(gt_densepose, instances.gt_boxes, image_shape)
         if self.dp_segm_on:
-            dp_seg_image_root = '/data2/wangxuanhan/datasets/coco2014/images'
+            dp_seg_image_root = './datasets/coco2014/dp_seg_images'
             ori_image_dir = dataset_dict["file_name"].split('/')
             dp_seg_image_dir = os.path.join(dp_seg_image_root,ori_image_dir[-2], ori_image_dir[-1])
             with PathManager.open(dp_seg_image_dir, "rb") as f:
